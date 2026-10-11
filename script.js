@@ -28,14 +28,30 @@ const DEFAULT_DATA = {
     {id:31, title:"مرحبًا بكم في دليل قطاع LSPD", date:"تعميم ثابت", text:"هذا الموقع مخصص لتنظيم قوانين القطاع ورتبه وتعاميمه. يرجى الرجوع إلى القوانين المحدثة قبل أداء المهام."}
   ]
 };
-let data = loadData();
+let data = clone(DEFAULT_DATA);
 let editMode = false;
 let editorState = null;
 const $ = s => document.querySelector(s);
 const $$ = s => [...document.querySelectorAll(s)];
 function clone(x){ return JSON.parse(JSON.stringify(x)); }
 function loadData(){ try { const raw=localStorage.getItem("lspdSiteData"); return raw?JSON.parse(raw):clone(DEFAULT_DATA); } catch(e){ return clone(DEFAULT_DATA); } }
-function saveData(){ localStorage.setItem("lspdSiteData", JSON.stringify(data)); render(); toast("تم حفظ التعديلات على هذا الجهاز."); }
+async function saveData(){
+  const token = sessionStorage.getItem("lspdAdminToken");
+  if(!token){ toast("سجّل الدخول بصلاحية الإدارة أولًا."); return; }
+  try{
+    const response = await fetch("/.netlify/functions/save-data", {
+      method:"POST",
+      headers:{"Content-Type":"application/json","Authorization":"Bearer "+token},
+      body:JSON.stringify({data})
+    });
+    const result = await response.json().catch(()=>({}));
+    if(!response.ok) throw new Error(result.error || "تعذر حفظ التعديلات.");
+    render();
+    toast("تم إرسال التحديث إلى GitHub وسيُنشر الموقع تلقائيًا خلال قليل.");
+  }catch(error){
+    toast(error.message || "تعذر الحفظ. تأكد من إعدادات Netlify والاتصال.");
+  }
+}
 function toast(msg){ const el=$("#toast"); el.textContent=msg; el.classList.add("show"); setTimeout(()=>el.classList.remove("show"),2500); }
 function esc(s){ return String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c])); }
 function render(){
@@ -87,7 +103,44 @@ document.addEventListener("click",e=>{
   if(edit){const type=edit.dataset.edit, collection={rule:"rules",rank:"ranks",penalty:"penalties",announcement:"announcements"}[type];openEditor(type,data[collection].find(x=>x.id===Number(edit.dataset.id))); }
   if(del){const type=del.dataset.delete, collection={rule:"rules",rank:"ranks",penalty:"penalties",announcement:"announcements"}[type];if(confirm("متأكد أنك تبي تحذف هذا العنصر؟")){data[collection]=data[collection].filter(x=>x.id!==Number(del.dataset.id));saveData();}}
 });
-$("#editToggle").addEventListener("click",()=>{editMode=!editMode;render();if(editMode)toast("وضع التعديل مفعّل.");});
+async function adminLogin(){
+  const password = prompt("أدخل كلمة مرور الإدارة:");
+  if(password === null || !password) return;
+  try{
+    const response = await fetch("/.netlify/functions/admin-login", {
+      method:"POST",
+      headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({password})
+    });
+    const result = await response.json().catch(()=>({}));
+    if(!response.ok || !result.token) throw new Error(result.error || "كلمة المرور غير صحيحة.");
+    sessionStorage.setItem("lspdAdminToken", result.token);
+    document.body.classList.add("admin-authenticated");
+    $("#editToggle").setAttribute("aria-hidden","false");
+    toast("تم تسجيل الدخول للإدارة.");
+  }catch(error){
+    toast(error.message || "تعذر تسجيل الدخول.");
+  }
+}
+function restoreAdminSession(){
+  if(sessionStorage.getItem("lspdAdminToken")){
+    document.body.classList.add("admin-authenticated");
+    $("#editToggle").setAttribute("aria-hidden","false");
+  }
+}
+$("#editToggle").addEventListener("click",()=>{
+  const token = sessionStorage.getItem("lspdAdminToken");
+  if(!token){ adminLogin(); return; }
+  editMode=!editMode;
+  render();
+  if(editMode) toast("وضع التعديل مفعّل.");
+});
+document.addEventListener("keydown",e=>{
+  if(e.ctrlKey && e.shiftKey && e.key.toLowerCase()==="l"){
+    e.preventDefault();
+    adminLogin();
+  }
+});
 $("#addRule").addEventListener("click",()=>openEditor("rule"));
 $("#addRank").addEventListener("click",()=>openEditor("rank"));
 $("#addPenalty").addEventListener("click",()=>openEditor("penalty"));
@@ -101,4 +154,24 @@ $("#importBtn").addEventListener("click",()=>$("#importFile").click());
 $("#importFile").addEventListener("change",async e=>{const f=e.target.files[0];if(!f)return;try{const d=JSON.parse(await f.text());if(!d.rules||!d.ranks||!d.penalties||!d.announcements)throw new Error();data=d;saveData();toast("تم استيراد البيانات.");}catch(err){toast("الملف غير صالح أو ليس نسخة LSPD.");}e.target.value="";});
 $("#resetBtn").addEventListener("click",()=>{if(confirm("سيتم حذف تعديلاتك الحالية واستعادة البيانات الافتراضية. هل أنت متأكد؟")){data=clone(DEFAULT_DATA);saveData();}});
 $("#year").textContent=new Date().getFullYear();
-render();
+async function initSite(){
+  restoreAdminSession();
+  try{
+    const response = await fetch("/site-data.json?ts="+Date.now(), {cache:"no-store"});
+    if(response.ok){
+      const remoteData = await response.json();
+      if(remoteData && Array.isArray(remoteData.rules) && Array.isArray(remoteData.ranks) &&
+         Array.isArray(remoteData.penalties) && Array.isArray(remoteData.announcements)){
+        data = remoteData;
+      }
+    }
+  }catch(error){
+    console.warn("Could not load published site data; using built-in defaults.", error);
+  }
+  render();
+  if(new URLSearchParams(location.search).get("admin")==="1"){
+    history.replaceState({}, "", location.pathname + location.hash);
+    if(!sessionStorage.getItem("lspdAdminToken")) await adminLogin();
+  }
+}
+initSite();
