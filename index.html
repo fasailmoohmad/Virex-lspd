@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>LSPD | دليل القطاع</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="topline"></div>
+  <header class="site-header">
+    <a class="brand" href="#home" aria-label="LSPD الرئيسية">
+      <img src="assets/lspd-logo.png" alt="شعار Virex CFW Police" onerror="this.style.display='none'">
+      <span><strong>LSPD</strong><small>LOS SANTOS POLICE DEPARTMENT</small></span>
+    </a>
+    <button class="menu-toggle" id="menuToggle" aria-label="فتح القائمة">☰</button>
+    <nav id="nav">
+      <a href="#home" class="nav-link active">الرئيسية</a>
+      <a href="#rules" class="nav-link">القوانين</a>
+      <a href="#ranks" class="nav-link">الرتب</a>
+      <a href="#penalties" class="nav-link">المخالفات</a>
+      <a href="#announcements" class="nav-link">التعاميم</a>
+    </nav>
+    <button id="editToggle" class="btn btn-outline">وضع التعديل</button>
+  </header>
+
+  <main>
+    <section class="hero" id="home">
+      <div class="hero-shade"></div>
+      <div class="hero-content">
+        <span class="eyebrow">VIREX CFW • SAN ANDREAS</span>
+        <h1>شرطة لوس سانتوس</h1>
+        <h2>LOS SANTOS POLICE DEPARTMENT</h2>
+        <p>دليل القطاع الرسمي — القوانين، الرتب، الإجراءات والتعاميم.</p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="#rules">استعراض القوانين</a>
+          <button class="btn btn-glass" id="exportBtn">تصدير نسخة احتياطية</button>
+        </div>
+      </div>
+      <div class="hero-badge"><span>★</span><b>LSPD</b><small>SERVE • PROTECT</small></div>
+    </section>
+
+    <section class="stats" aria-label="ملخص الموقع">
+      <article class="stat-card"><span class="stat-icon">▤</span><div><strong id="ruleCount">0</strong><small>قانون مسجل</small></div></article>
+      <article class="stat-card"><span class="stat-icon">✦</span><div><strong id="rankCount">0</strong><small>رتبة</small></div></article>
+      <article class="stat-card"><span class="stat-icon">⚖</span><div><strong id="penaltyCount">0</strong><small>إجراء تأديبي</small></div></article>
+      <article class="stat-card"><span class="stat-icon">◷</span><div><strong>24/7</strong><small>الانضباط والمسؤولية</small></div></article>
+    </section>
+
+    <section class="content-section" id="rules">
+      <div class="section-heading">
+        <div><span class="eyebrow">DEPARTMENT REGULATIONS</span><h2>قوانين القطاع</h2><p>تقدر تضيف القوانين وتعدّلها أو تحذفها من وضع التعديل.</p></div>
+        <div class="edit-only hidden"><button class="btn btn-primary" id="addRule">＋ إضافة قانون</button></div>
+      </div>
+      <div class="toolbar">
+        <input id="ruleSearch" type="search" placeholder="ابحث عن قانون..." aria-label="البحث عن قانون">
+        <select id="ruleCategory" aria-label="تصنيف القوانين">
+          <option value="الكل">كل التصنيفات</option>
+          <option>السلوك والانضباط</option><option>الزي والمعدات</option><option>الاتصالات</option><option>الميدان والرول بلاي</option>
+        </select>
+      </div>
+      <div id="rulesGrid" class="rules-grid"></div>
+      <p id="rulesEmpty" class="empty hidden">ما فيه قوانين تطابق البحث.</p>
+    </section>
+
+    <section class="content-section alternate" id="ranks">
+      <div class="section-heading">
+        <div><span class="eyebrow">CHAIN OF COMMAND</span><h2>الرتب والمسؤوليات</h2><p>رتّب الرتب حسب نظام قطاعك وعدّل صلاحيات كل رتبة.</p></div>
+        <div class="edit-only hidden"><button class="btn btn-primary" id="addRank">＋ إضافة رتبة</button></div>
+      </div>
+      <div class="table-wrap">
+        <table><thead><tr><th>الرتبة</th><th>المسؤوليات</th><th class="edit-column hidden">إجراء</th></tr></thead><tbody id="ranksBody"></tbody></table>
+      </div>
+    </section>
+
+    <section class="content-section" id="penalties">
+      <div class="section-heading">
+        <div><span class="eyebrow">DISCIPLINARY ACTIONS</span><h2>المخالفات والإجراءات</h2><p>حدّد الإجراء المناسب حسب سياسة السيرفر.</p></div>
+        <div class="edit-only hidden"><button class="btn btn-primary" id="addPenalty">＋ إضافة إجراء</button></div>
+      </div>
+      <div class="table-wrap">
+        <table><thead><tr><th>الإجراء</th><th>الحالة</th><th>التفاصيل</th><th class="edit-column hidden">إجراء</th></tr></thead><tbody id="penaltiesBody"></tbody></table>
+      </div>
+    </section>
+
+    <section class="content-section alternate" id="announcements">
+      <div class="section-heading">
+        <div><span class="eyebrow">OFFICIAL NOTICES</span><h2>التعاميم والقرارات</h2><p>مكان مخصص للإعلانات الرسمية لقطاع LSPD.</p></div>
+        <div class="edit-only hidden"><button class="btn btn-primary" id="addAnnouncement">＋ إضافة تعميم</button></div>
+      </div>
+      <div id="announcementsList" class="announcements-list"></div>
+    </section>
+
+    <section class="admin-panel hidden" id="adminPanel">
+      <div><span class="eyebrow">LOCAL MANAGEMENT</span><h2>إدارة بيانات الموقع</h2><p>التعديلات تُحفظ في هذا المتصفح على هذا الجهاز فقط. استخدم التصدير للاحتفاظ بنسخة احتياطية.</p></div>
+      <div class="admin-actions">
+        <button class="btn btn-outline" id="importBtn">استيراد نسخة</button>
+        <button class="btn btn-danger" id="resetBtn">استعادة البيانات الافتراضية</button>
+        <input type="file" id="importFile" accept="application/json,.json" hidden>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="footer-brand"><strong>LSPD</strong><span>VIREX CFW POLICE DEPARTMENT</span></div>
+    <p>وثيقة تنظيمية خاصة بالسيرفر. قوانين اللعب وإدارة السيرفر هي المرجع الأعلى.</p>
+    <small>© <span id="year"></span> LSPD • جميع الحقوق محفوظة</small>
+  </footer>
+
+  <dialog id="editorDialog">
+    <form method="dialog" id="editorForm">
+      <div class="dialog-head"><h3 id="dialogTitle">إضافة عنصر</h3><button class="icon-btn" value="cancel" aria-label="إغلاق">×</button></div>
+      <div id="dialogFields"></div>
+      <div class="dialog-actions"><button class="btn btn-outline" value="cancel">إلغاء</button><button class="btn btn-primary" id="saveItem" value="default">حفظ</button></div>
+    </form>
+  </dialog>
+  <div id="toast" class="toast" role="status"></div>
+  <script src="script.js"></script>
+</body>
+</html>
