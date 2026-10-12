@@ -18,7 +18,7 @@ const DEFAULT_DATA = {
     {id:16, name:"مستجد", duties:"إكمال التدريب والعمل تحت إشراف المسؤولين."}
   ],
   penalties: [
-    {id:21, action:"تنبيه", case:"  مدري هلا  الووووhgghghgfhfghegvsgwdgegو", details:"تنبيه شفهي أو توثيق ملاحظة."},
+    {id:21, action:"تنبيه", case:"  fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff", details:"تنبيه شفهي أو توثيق ملاحظة."},
     {id:22, action:"إنذار رسمي", case:"تكرار المخالفة أو عدم الالتزام بالتوجيهات", details:"إنذار رسمي مع توضيح سبب المخالفة."},
     {id:23, action:"إيقاف مؤقت", case:"مخالفة متوسطة أو تكرار بعد الإنذار", details:"تحدد المدة من قيادة القطاع وفق نظام السيرفر."},
     {id:24, action:"خفض رتبة", case:"إساءة استخدام الصلاحيات أو إخلال جسيم", details:"بعد مراجعة الأدلة وسماع رد الفرد."},
