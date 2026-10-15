@@ -1,120 +1,1112 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>LSPD | دليل القطاع</title>
-  <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>متجر فايف ام | VIREX STORE</title>
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+
+
+
+
+
+
+
+
+
+  <style>
+    :root {
+      --bg-dark: #0b0712;
+      --bg-card: #130d21;
+      --primary-purple: #7928ca;
+      --neon-purple: #9d4edd;
+      --glow-purple: rgba(157, 78, 221, 0.4);
+      --text-main: #f3f4f6;
+      --text-muted: #9ca3af;
+      --border-color: rgba(121, 40, 202, 0.25);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Tajawal', sans-serif;
+    }
+
+    body {
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      overflow-x: hidden;
+    }
+
+    /* Navbar */
+    .navbar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(11, 7, 18, 0.9);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border-color);
+      padding: 12px 20px;
+    }
+
+    .nav-container {
+      max-width: 1250px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .logo-img {
+      width: 45px;
+      height: 45px;
+      border-radius: 50%;
+      border: 2px solid var(--neon-purple);
+      box-shadow: 0 0 12px var(--glow-purple);
+      object-fit: cover;
+    }
+
+    .brand-name {
+      font-size: 20px;
+      font-weight: 900;
+    }
+
+    .brand-name span { color: var(--neon-purple); }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .discord-btn {
+      background: #5865f2;
+      color: #fff;
+      text-decoration: none;
+      padding: 8px 18px;
+      border-radius: 8px;
+      font-weight: bold;
+      font-size: 14px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .cart-btn {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      color: #fff;
+      padding: 8px 15px;
+      border-radius: 8px;
+      cursor: pointer;
+      position: relative;
+      font-size: 16px;
+    }
+
+    .cart-count {
+      position: absolute;
+      top: -8px;
+      left: -8px;
+      background: var(--neon-purple);
+      font-size: 11px;
+      padding: 2px 7px;
+      border-radius: 50%;
+      font-weight: bold;
+    }
+
+    /* Store Section & Filters */
+    .store-section {
+      max-width: 1250px;
+      margin: 30px auto;
+      padding: 0 20px;
+    }
+
+    .filters-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 15px;
+      margin-bottom: 30px;
+      background: var(--bg-card);
+      padding: 12px 18px;
+      border-radius: 12px;
+      border: 1px solid var(--border-color);
+    }
+
+    .categories {
+      display: flex;
+      gap: 10px;
+    }
+
+    .cat-btn {
+      background: transparent;
+      border: 1px solid transparent;
+      color: var(--text-muted);
+      padding: 8px 18px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: bold;
+      font-size: 14px;
+      transition: 0.2s;
+    }
+
+    .cat-btn.active, .cat-btn:hover {
+      background: var(--primary-purple);
+      color: #fff;
+    }
+
+    .search-box {
+      display: flex;
+      align-items: center;
+      background: rgba(0, 0, 0, 0.4);
+      padding: 8px 14px;
+      border-radius: 8px;
+      border: 1px solid var(--border-color);
+    }
+
+    .search-box input {
+      background: transparent;
+      border: none;
+      outline: none;
+      color: #fff;
+      margin-right: 8px;
+      font-size: 14px;
+    }
+
+    /* Cards Grid */
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 25px;
+    }
+
+    .product-card {
+      background: var(--bg-card);
+      border-radius: 14px;
+      border: 1px solid var(--border-color);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: 0.3s;
+    }
+
+    .product-card:hover {
+      transform: translateY(-4px);
+      border-color: var(--neon-purple);
+      box-shadow: 0 8px 25px var(--glow-purple);
+    }
+
+    .product-image {
+      position: relative;
+      width: 100%;
+      height: 200px;
+      background: #000;
+    }
+
+    .product-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .tag {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: bold;
+    }
+
+    .tag.best { background: #eab308; color: #000; }
+    .tag.exclusive { background: var(--neon-purple); color: #fff; }
+
+    .product-info {
+      padding: 18px;
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1;
+    }
+
+    .product-info h3 {
+      font-size: 19px;
+      margin-bottom: 8px;
+    }
+
+    .product-info p {
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.6;
+      margin-bottom: 15px;
+      flex-grow: 1;
+    }
+
+    .product-bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      padding-top: 12px;
+    }
+
+    .price {
+      font-size: 20px;
+      font-weight: 800;
+      color: #fff;
+    }
+
+    .price small {
+      font-size: 13px;
+      color: var(--neon-purple);
+    }
+
+    .buy-btn {
+      background: linear-gradient(135deg, var(--primary-purple), var(--neon-purple));
+      color: #fff;
+      border: none;
+      padding: 9px 18px;
+      border-radius: 8px;
+      font-weight: bold;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: 0.2s;
+    }
+
+    .buy-btn:hover {
+      transform: scale(1.04);
+      box-shadow: 0 0 12px var(--glow-purple);
+    }
+
+    /* Cart Sidebar Drawer */
+    .cart-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.7);
+      backdrop-filter: blur(4px);
+      z-index: 998;
+    }
+
+    .cart-drawer {
+      position: fixed;
+      top: 0;
+      left: -400px;
+      width: 100%;
+      max-width: 360px;
+      height: 100vh;
+      background: #110b1d;
+      border-right: 1px solid var(--border-color);
+      z-index: 999;
+      display: flex;
+      flex-direction: column;
+      transition: left 0.3s ease;
+    }
+
+    .cart-drawer.open {
+      left: 0;
+    }
+
+    .cart-header {
+      padding: 16px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .close-btn {
+      background: transparent;
+      border: none;
+      color: #fff;
+      font-size: 24px;
+      cursor: pointer;
+    }
+
+    .cart-items {
+      flex-grow: 1;
+      overflow-y: auto;
+      padding: 15px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .cart-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: rgba(255, 255, 255, 0.03);
+      padding: 10px;
+      border-radius: 8px;
+      border: 1px solid var(--border-color);
+    }
+
+    .cart-item img {
+      width: 50px;
+      height: 50px;
+      border-radius: 6px;
+      object-fit: cover;
+    }
+
+    .cart-item-details { flex-grow: 1; }
+    .cart-item-details h4 { font-size: 14px; margin-bottom: 4px; }
+    .cart-item-details span { color: var(--neon-purple); font-size: 13px; font-weight: bold; }
+
+    .cart-footer {
+      padding: 18px;
+      border-top: 1px solid var(--border-color);
+      background: #0d0817;
+    }
+
+    .total-box {
+      display: flex;
+      justify-content: space-between;
+      font-size: 16px;
+      margin-bottom: 15px;
+    }
+
+    .total-box strong { color: var(--neon-purple); font-size: 20px; }
+
+    .btn-checkout {
+      width: 100%;
+      background: var(--neon-purple);
+      color: #fff;
+      border: none;
+      padding: 12px;
+      border-radius: 8px;
+      font-weight: bold;
+      cursor: pointer;
+      font-size: 15px;
+    }
+
+    /* Checkout Modal */
+    .checkout-modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.85);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+      padding: 15px;
+    }
+
+    .checkout-box {
+      background: #140d24;
+      border: 1px solid var(--neon-purple);
+      width: 100%;
+      max-width: 440px;
+      border-radius: 14px;
+      padding: 25px;
+      position: relative;
+    }
+
+    .form-group {
+      margin-bottom: 14px;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 13px;
+      margin-bottom: 6px;
+      color: #ccc;
+    }
+
+    .form-group input {
+      width: 100%;
+      background: rgba(0, 0, 0, 0.4);
+      border: 1px solid var(--border-color);
+      padding: 10px;
+      border-radius: 8px;
+      color: #fff;
+      outline: none;
+    }
+
+    .btn-pay {
+      width: 100%;
+      background: #10b981;
+      color: #fff;
+      border: none;
+      padding: 12px;
+      border-radius: 8px;
+      font-weight: bold;
+      font-size: 16px;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+
+
+
+    /* ================= تصميم الفوتر المطابق لبوليتو ================= */
+    .boleto-footer {
+      background: radial-gradient(circle at top, #120926 0%, #05020c 100%);
+      border-top: 1px solid var(--border-color);
+      padding: 60px 20px 25px;
+      margin-top: 60px;
+    }
+
+    .footer-container {
+      max-width: 1250px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 2fr 1.2fr 1.2fr 1fr;
+      gap: 40px;
+    }
+
+    @media (max-width: 900px) {
+      .footer-container {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .footer-container {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .footer-col h3 {
+      font-size: 19px;
+      color: #fff;
+      margin-bottom: 12px;
+      font-weight: 800;
+    }
+
+    .footer-col h4 {
+      font-size: 17px;
+      color: #fff;
+      margin-bottom: 20px;
+      font-weight: 800;
+      position: relative;
+    }
+
+    .brand-col .footer-logo {
+      width: 75px;
+      height: 75px;
+      border-radius: 50%;
+      border: 2px solid var(--neon-purple);
+      margin-bottom: 15px;
+      box-shadow: 0 0 20px var(--glow-purple);
+      object-fit: cover;
+    }
+
+    .brand-col p {
+      color: var(--text-muted);
+      font-size: 13px;
+      line-height: 1.8;
+      max-width: 360px;
+      margin-bottom: 20px;
+    }
+
+    /* شارة الضريبة VAT */
+    .vat-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      background: #0d0818;
+      border: 1px solid rgba(16, 185, 129, 0.4);
+      padding: 8px 14px;
+      border-radius: 8px;
+    }
+
+    .vat-text span {
+      display: block;
+      font-size: 11px;
+      color: #10b981;
+    }
+
+    .vat-text strong {
+      font-size: 14px;
+      color: #fff;
+      letter-spacing: 1px;
+    }
+
+    .vat-icon {
+      background: #10b981;
+      color: #000;
+      font-weight: 900;
+      font-size: 11px;
+      padding: 4px 6px;
+      border-radius: 4px;
+    }
+
+    /* الروابط وقوائم التواصل */
+    .footer-links, .contact-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .footer-links a, .contact-list a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 14px;
+      transition: 0.3s;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .footer-links a:hover, .contact-list a:hover {
+      color: #fff;
+      transform: translateX(-5px);
+      text-shadow: 0 0 10px var(--neon-purple);
+    }
+
+    .contact-list i {
+      color: var(--neon-purple);
+      font-size: 16px;
+    }
+
+    /* أيقونات التواصل الاجتماعي الدائرية */
+    .social-icons {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .social-icons a {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      background: rgba(255, 255, 255, 0.03);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      text-decoration: none;
+      transition: 0.3s;
+    }
+
+    .social-icons a:hover {
+      border-color: var(--neon-purple);
+      background: var(--primary-purple);
+      box-shadow: 0 0 15px var(--glow-purple);
+      transform: translateY(-3px);
+    }
+
+    .footer-bottom {
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
+      margin-top: 40px;
+      padding-top: 20px;
+      text-align: center;
+      color: #666;
+      font-size: 13px;
+    }
+
+    /* نافذة نبذة عنا والشروط */
+    .info-modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.75);
+      backdrop-filter: blur(4px);
+      z-index: 1500;
+    }
+
+    .info-modal {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: #140d24;
+      border: 1px solid var(--neon-purple);
+      box-shadow: 0 0 35px var(--glow-purple);
+      width: 90%;
+      max-width: 550px;
+      border-radius: 14px;
+      z-index: 1600;
+      overflow: hidden;
+    }
+
+    .info-modal-header {
+      padding: 16px 20px;
+      background: rgba(121, 40, 202, 0.15);
+      border-bottom: 1px solid var(--border-color);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .info-modal-body {
+      padding: 22px;
+      color: #ddd;
+      font-size: 14px;
+      line-height: 1.8;
+      max-height: 420px;
+      overflow-y: auto;
+    }
+
+    .info-modal-body ul {
+      margin-right: 20px;
+      margin-top: 10px;
+    }
+  </style>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 </head>
 <body>
-  <div class="topline"></div>
-  <header class="site-header">
-    <a class="brand" href="#home" aria-label="LSPD الرئيسية">
-      <img src="assets/lspd-logo.png" alt="شعار Virex CFW Police" onerror="this.style.display='none'">
-      <span><strong>LSPD</strong><small>LOS SANTOS POLICE DEPARTMENT</small></span>
-    </a>
-    <button class="menu-toggle" id="menuToggle" aria-label="فتح القائمة">☰</button>
-    <nav id="nav">
-      <a href="#home" class="nav-link active"> الرائسية </a>
-      <a href="#rules" class="nav-link">القوانين</a>
-      <a href="#ranks" class="nav-link">الرتب</a>
-      <a href="#penalties" class="nav-link">المخالفات</a>
-      <a href="#announcements" class="nav-link">التعاميم</a>
-    </nav>
-    <button id="editToggle" class="btn btn-outline" aria-hidden="true">وضع التعديل</button>
+
+  <!-- شريط التنقل -->
+  <header class="navbar">
+    <div class="nav-container">
+      <div class="brand">
+        <img src="Virex.png" alt="Logo" class="logo-img" />
+        <span class="brand-name">VIREX <span>CFW</span></span>
+      </div>
+
+      <div class="nav-actions">
+        <button class="cart-btn" onclick="openCart()">
+          <i class="fa-solid fa-cart-shopping"></i>
+          <span class="cart-count" id="cartCount">0</span>
+        </button>
+        <a href="https://discord.gg/BjDm7DSM4" target="_blank" class="discord-btn">
+          <i class="fa-brands fa-discord"></i> ديسكورد
+        </a>
+      </div>
+    </div>
   </header>
 
-  <main>
-    <section class="hero" id="home">
-      <div class="hero-shade"></div>
-      <div class="hero-content">
-        <span class="eyebrow">VIREX CFW • SAN ANDREAS</span>
-        <h1>شرطة لوس سانتوس</h1>
-        <h2>LOS SANTOS POLICE DEPARTMENT</h2>
-        <p>دليل القطاع الرسمي — القوانين، الرتب، الإجراءات والتعاميم.</p>
-        <div class="hero-actions">
-          <a class="btn btn-primary" href="#rules">استعراض القوانين</a>
-          <button class="btn btn-glass" id="exportBtn">تصدير نسخة احتياطية</button>
+  <!-- المتجر والتنقل -->
+  <main class="store-section">
+    <div class="filters-bar">
+      <div class="categories">
+        <button class="cat-btn active" onclick="filterItems('all', this)">عرض الكل</button>
+        <button class="cat-btn" onclick="filterItems('cars', this)">السيارات</button>
+        <button class="cat-btn" onclick="filterItems('priority', this)">الأولوية</button>
+      </div>
+      <div class="search-box">
+        <i class="fa-solid fa-magnifying-glass"></i>
+        <input type="text" id="searchInput" placeholder="ابحث عن مركبة..." onkeyup="searchItems()" />
+      </div>
+    </div>
+
+    <div class="product-grid" id="productGrid">
+
+      <!-- جمس سييرا -->
+      <article class="product-card" data-category="cars" data-name="جمس سييرا 2024">
+        <div class="product-image">
+          <span class="tag best">الأكثر مبيعاً ⭐</span>
+          <img src="sierra.jpg" alt="جمس سييرا" onerror="this.src='https://images.unsplash.com/photo-1559416523-140ddc3d238c?w=600'" />
         </div>
-      </div>
-      <div class="hero-badge"><span>★</span><b>LSPD</b><small>SERVE • PROTECT</small></div>
-    </section>
+        <div class="product-info">
+          <h3>جمس سييرا 2024</h3>
+          <p>شاحنة بيك اب قوية بمواصفات سيرفر حصرية وتحكم ممتاز في الرمال والتضاريس.</p>
+          <div class="product-bottom">
+            <span class="price">150 <small>ر.س</small></span>
+            <button class="buy-btn" onclick="addItemToCart('جمس سييرا 2024', 150, 'sierra.jpg')">
+              <i class="fa-solid fa-cart-shopping"></i> شراء الآن
+            </button>
+          </div>
+        </div>
+      </article>
 
-    <section class="stats" aria-label="ملخص الموقع">
-      <article class="stat-card"><span class="stat-icon">▤</span><div><strong id="ruleCount">0</strong><small>قانون مسجل</small></div></article>
-      <article class="stat-card"><span class="stat-icon">✦</span><div><strong id="rankCount">0</strong><small>رتبة</small></div></article>
-      <article class="stat-card"><span class="stat-icon">⚖</span><div><strong id="penaltyCount">0</strong><small>إجراء تأديبي</small></div></article>
-      <article class="stat-card"><span class="stat-icon">◷</span><div><strong>24/7</strong><small>الانضباط والمسؤولية</small></div></article>
-    </section>
+      <!-- نيسان جي تي ار -->
+      <article class="product-card" data-category="cars" data-name="نيسان جي تي ار">
+        <div class="product-image">
+          <span class="tag exclusive">حصري 🔥</span>
+          <img src="gtr.jpg" alt="نيسان GTR" onerror="this.src='https://images.unsplash.com/photo-1617814076367-b759c7d7e738?w=600'" />
+        </div>
+        <div class="product-info">
+          <h3>نيسان جي تي ار R35</h3>
+          <p>تسارع استثنائي وصوت طربي مع وزنية احترافية مخصصة للسباقات.</p>
+          <div class="product-bottom">
+            <span class="price">180 <small>ر.س</small></span>
+            <button class="buy-btn" onclick="addItemToCart('نيسان جي تي ار R35', 180, 'gtr.jpg')">
+              <i class="fa-solid fa-cart-shopping"></i> شراء الآن
+            </button>
+          </div>
+        </div>
+      </article>
 
-    <section class="content-section" id="rules">
-      <div class="section-heading">
-        <div><span class="eyebrow">DEPARTMENT REGULATIONS</span><h2>قوانين القطاع</h2><p>تقدر تضيف القوانين وتعدّلها أو تحذفها من وضع التعديل.</p></div>
-        <div class="edit-only hidden"><button class="btn btn-primary" id="addRule">＋ إضافة قانون</button></div>
-      </div>
-      <div class="toolbar">
-        <input id="ruleSearch" type="search" placeholder="ابحث عن قانون..." aria-label="البحث عن قانون">
-        <select id="ruleCategory" aria-label="تصنيف القوانين">
-          <option value="الكل">كل التصنيفات</option>
-          <option>السلوك والانضباط</option><option>الزي والمعدات</option><option>الاتصالات</option><option>الميدان والرول بلاي</option>
-        </select>
-      </div>
-      <div id="rulesGrid" class="rules-grid"></div>
-      <p id="rulesEmpty" class="empty hidden">ما فيه قوانين تطابق البحث.</p>
-    </section>
+      <!-- تشالنجر -->
+      <article class="product-card" data-category="cars" data-name="دوج تشالنجر ريد آي">
+        <div class="product-image">
+          <span class="tag best">وحش العضلات ⚡</span>
+          <img src="challenger.jpg" alt="تشالنجر" onerror="this.src='https://images.unsplash.com/photo-1605559424843-9e4c228bf1c2?w=600'" />
+        </div>
+        <div class="product-info">
+          <h3>دوج تشالنجر ريد آي</h3>
+          <p>محرك V8 سوبر تشارجر وأداء خارق وسرعة عالية في الخطوط السريعة.</p>
+          <div class="product-bottom">
+            <span class="price">200 <small>ر.س</small></span>
+            <button class="buy-btn" onclick="addItemToCart('دوج تشالنجر ريد آي', 200, 'challenger.jpg')">
+              <i class="fa-solid fa-cart-shopping"></i> شراء الآن
+            </button>
+          </div>
+        </div>
+      </article>
 
-    <section class="content-section alternate" id="ranks">
-      <div class="section-heading">
-        <div><span class="eyebrow">CHAIN OF COMMAND</span><h2>الرتب والمسؤوليات</h2><p>رتّب الرتب حسب نظام قطاعك وعدّل صلاحيات كل رتبة.</p></div>
-        <div class="edit-only hidden"><button class="btn btn-primary" id="addRank">＋ إضافة رتبة</button></div>
-      </div>
-      <div class="table-wrap">
-        <table><thead><tr><th>الرتبة</th><th>المسؤوليات</th><th class="edit-column hidden">إجراء</th></tr></thead><tbody id="ranksBody"></tbody></table>
-      </div>
-    </section>
+      <!-- كرت الأولوية -->
+      <article class="product-card" data-category="priority" data-name="أولوية دخول ذهبية">
+        <div class="product-image">
+          <span class="tag exclusive">دخول فوري ⚡</span>
+          <img src="https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=600" alt="أولوية" />
+        </div>
+        <div class="product-info">
+          <h3>أولوية دخول ذهبية (Queue Bypass)</h3>
+          <p>تخطي طابور الانتظار والدخول المباشر للسيرفر لمدة شهر كامل مع رتبة مميزة.</p>
+          <div class="product-bottom">
+            <span class="price">75 <small>ر.س</small></span>
+            <button class="buy-btn" onclick="addItemToCart('أولوية دخول ذهبية', 75, 'https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=600')">
+              <i class="fa-solid fa-cart-shopping"></i> شراء الآن
+            </button>
+          </div>
+        </div>
+      </article>
 
-    <section class="content-section" id="penalties">
-      <div class="section-heading">
-        <div><span class="eyebrow">DISCIPLINARY ACTIONS</span><h2>المخالفات والإجراءات</h2><p>حدّد الإجراء المناسب حسب سياسة السيرفر.</p></div>
-        <div class="edit-only hidden"><button class="btn btn-primary" id="addPenalty">＋ إضافة إجراء</button></div>
-      </div>
-      <div class="table-wrap">
-        <table><thead><tr><th>الإجراء</th><th>الحالة</th><th>التفاصيل</th><th class="edit-column hidden">إجراء</th></tr></thead><tbody id="penaltiesBody"></tbody></table>
-      </div>
-    </section>
-
-    <section class="content-section alternate" id="announcements">
-      <div class="section-heading">
-        <div><span class="eyebrow">OFFICIAL NOTICES</span><h2>التعاميم والقرارات</h2><p>مكان مخصص للإعلانات الرسمية لقطاع LSPD.</p></div>
-        <div class="edit-only hidden"><button class="btn btn-primary" id="addAnnouncement">＋ إضافة تعميم</button></div>
-      </div>
-      <div id="announcementsList" class="announcements-list"></div>
-    </section>
-
-    <section class="admin-panel hidden" id="adminPanel">
-      <div><span class="eyebrow">LOCAL MANAGEMENT</span><h2>إدارة بيانات الموقع</h2><p>التعديلات تُحفظ في هذا المتصفح على هذا الجهاز فقط. استخدم التصدير للاحتفاظ بنسخة احتياطية.</p></div>
-      <div class="admin-actions">
-        <button class="btn btn-outline" id="importBtn">استيراد نسخة</button>
-        <button class="btn btn-danger" id="resetBtn">استعادة البيانات الافتراضية</button>
-        <input type="file" id="importFile" accept="application/json,.json" hidden>
-      </div>
-    </section>
+    </div>
   </main>
 
-  <footer>
-    <div class="footer-brand"><strong>LSPD</strong><span>VIREX CFW POLICE DEPARTMENT</span></div>
-    <p>وثيقة تنظيمية خاصة بالسيرفر. قوانين اللعب وإدارة السيرفر هي المرجع الأعلى.</p>
-    <small>© <span id="year"></span> LSPD • جميع الحقوق محفوظة</small>
+  <!-- السلة الجانبية -->
+  <div class="cart-overlay" id="cartOverlay" onclick="closeCart()"></div>
+  <aside class="cart-drawer" id="cartDrawer">
+    <div class="cart-header">
+      <h3><i class="fa-solid fa-bag-shopping"></i> سلة مشترياتك</h3>
+      <button class="close-btn" onclick="closeCart()">&times;</button>
+    </div>
+    <div class="cart-items" id="cartItemsList">
+      <p style="text-align: center; color: #888; margin-top: 50px;">السلة فارغة</p>
+    </div>
+    <div class="cart-footer">
+      <div class="total-box">
+        <span>المجموع:</span>
+        <strong id="cartTotal">0 ر.س</strong>
+      </div>
+      <button class="btn-checkout" onclick="openCheckout()">
+        <i class="fa-solid fa-arrow-left"></i> تأكيد الطلب والدفع
+      </button>
+    </div>
+  </aside>
+
+  <!-- نافذة الدفع -->
+  <div class="checkout-modal" id="checkoutModal">
+    <div class="checkout-box">
+      <button class="close-btn" onclick="closeCheckout()" style="position: absolute; left: 15px; top: 15px;">&times;</button>
+      
+      <div id="checkoutForm">
+        <h2 style="margin-bottom: 15px;"><i class="fa-solid fa-shield-halved"></i> إتمام عملية الدفع</h2>
+        <form onsubmit="finishPayment(event)">
+          <div class="form-group">
+            <label>يوزر الديسكورد (Discord Username):</label>
+            <input type="text" id="discordInput" placeholder="مثال: virex_user" required />
+          </div>
+          <div class="form-group">
+            <label>الآيدي في الفايف ام (FiveM ID):</label>
+            <input type="text" id="fivemInput" placeholder="مثال: 1045" required />
+          </div>
+          <div class="form-group">
+            <label>المبلغ المطلوب:</label>
+            <input type="text" id="finalTotalDisplay" readonly style="color: #9d4edd; font-weight: bold;" />
+          </div>
+          <button type="submit" class="btn-pay"><i class="fa-solid fa-lock"></i> ادفع الآن</button>
+        </form>
+      </div>
+
+      <div id="successBox" style="display: none; text-align: center;">
+        <i class="fa-solid fa-circle-check" style="font-size: 50px; color: #10b981; margin-bottom: 10px;"></i>
+        <h2>تم تأكيد طلبك بنجاح!</h2>
+        <p style="color: #bbb; margin: 10px 0;">رقم طلبك الخاص:</p>
+        <div style="font-size: 22px; font-weight: bold; color: #9d4edd; background: rgba(0,0,0,0.5); padding: 10px; border-radius: 8px;" id="orderCode">#VX-1000</div>
+        <p style="font-size: 13px; color: #888; margin: 15px 0;">توجه لتكت الديسكورد لاستلام طلبك فوراً.</p>
+        <button class="btn-checkout" onclick="closeCheckout()">إغلاق</button>
+      </div>
+    </div>
+  </div>
+<!-- ================= الفوتر التعريفي الكامل (نفس تصميم بوليتو) ================= -->
+  <footer class="boleto-footer">
+    <div class="footer-container">
+
+      <!-- العمود 1: هوية المتجر والتعريف -->
+      <div class="footer-col brand-col">
+        <img src="Virex.png" alt="VIREX" class="footer-logo" />
+        <h3>متجر سيرفر مقاطعة VIREX التجارية</h3>
+        <p>متجر سيرفر مقاطعة VIREX للمنتجات الرقمية للعبة فايف ام، وسيلة التواصل الأساسية هي ديسكورد سيرفر مقاطعة VIREX الرسمي.</p>
+        
+        <!-- شارة التوثيق / الرقم الضريبي مثل الصورة -->
+        <div class="vat-badge">
+          <div class="vat-text">
+            <span>الرقم الضريبي / التوثيق</span>
+            <strong>310523631300003</strong>
+          </div>
+          <div class="vat-icon">VAT</div>
+        </div>
+      </div>
+
+      <!-- العمود 2: روابط مهمة (نبذة عنا والشروط) -->
+      <div class="footer-col">
+        <h4>روابط مهمة</h4>
+        <ul class="footer-links">
+          <li><a href="javascript:void(0)" onclick="openInfoModal('terms')">» الشروط والاحكام وسياسة المتجر</a></li>
+          <li><a href="javascript:void(0)" onclick="openInfoModal('about')">» نبذه عنا</a></li>
+          <li><a href="javascript:void(0)" onclick="openInfoModal('delivery')">» طريقة تسليم المركبات</a></li>
+        </ul>
+      </div>
+
+      <!-- العمود 3: تواصل معنا -->
+      <div class="footer-col">
+        <h4>تواصل معنا</h4>
+        <ul class="contact-list">
+          <li>
+            <a href="https://wa.me/966544752374" target="_blank">
+              » <i class="fa-brands fa-whatsapp"></i> +96655555555
+            </a>
+          </li>
+          <li>
+            <a href="tel:+966544752374">
+              » <i class="fa-solid fa-mobile-screen"></i> +96655555555
+            </a>
+          </li>
+          <li>
+            <a href="mailto:support@virex.com">
+              » <i class="fa-regular fa-envelope"></i> support@virex.com
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <!-- العمود 4: تابعنا على -->
+      <div class="footer-col social-col">
+        <h4>تابعنا على</h4>
+        <div class="social-icons">
+          <a href="https://snapchat.com" target="_blank" title="سناب شات"><i class="fa-brands fa-snapchat"></i></a>
+          <a href="https://tiktok.com" target="_blank" title="تيك توك"><i class="fa-brands fa-tiktok"></i></a>
+          <a href="https://youtube.com" target="_blank" title="يوتيوب"><i class="fa-brands fa-youtube"></i></a>
+          <a href="https://discord.gg/BjDm7DSM4" target="_blank" title="ديسكورد"><i class="fa-brands fa-discord"></i></a>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="footer-bottom">
+      <p>جميع الحقوق محفوظة © 2026 متجر سيرفر مقاطعة VIREX | </p>
+    </div>
   </footer>
 
-  <dialog id="editorDialog">
-    <form method="dialog" id="editorForm">
-      <div class="dialog-head"><h3 id="dialogTitle">إضافة عنصر</h3><button class="icon-btn" value="cancel" aria-label="إغلاق">×</button></div>
-      <div id="dialogFields"></div>
-      <div class="dialog-actions"><button class="btn btn-outline" value="cancel">إلغاء</button><button class="btn btn-primary" id="saveItem" value="default">حفظ</button></div>
-    </form>
-  </dialog>
-  <div id="toast" class="toast" role="status"></div>
-  <script src="script.js"></script>
+  <!-- ================= نافذة "نبذة عنا" و"الشروط" المنبثقة ================= -->
+  <div class="info-modal-overlay" id="infoModalOverlay" onclick="closeInfoModal()"></div>
+  <div class="info-modal" id="infoModal">
+    <div class="info-modal-header">
+      <h3 id="infoModalTitle">العنوان</h3>
+      <button class="close-btn" onclick="closeInfoModal()">&times;</button>
+    </div>
+    <div class="info-modal-body" id="infoModalContent">
+      <!-- المحتوى التعريفي يظهر هنا -->
+    </div>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+  <!-- الجافاسكربت المباشر (مستحيل يفصل أو يتعطل) -->
+  <script>
+    let cart = [];
+
+    // إضافة منتج للسلة
+    function addItemToCart(name, price, img) {
+      cart.push({ name, price, img });
+      renderCart();
+      openCart();
+    }
+
+    // حذف منتج من السلة
+    function deleteFromCart(index) {
+      cart.splice(index, 1);
+      renderCart();
+    }
+
+    // عرض عناصر السلة وحساب الإجمالي
+    function renderCart() {
+      const list = document.getElementById('cartItemsList');
+      const badge = document.getElementById('cartCount');
+      const totalTxt = document.getElementById('cartTotal');
+
+      badge.innerText = cart.length;
+
+      if (cart.length === 0) {
+        list.innerHTML = '<p style="text-align: center; color: #888; margin-top: 50px;">السلة فارغة</p>';
+        totalTxt.innerText = '0 ر.س';
+        return;
+      }
+
+      let sum = 0;
+      list.innerHTML = '';
+
+      cart.forEach((item, idx) => {
+        sum += item.price;
+        list.innerHTML += `
+          <div class="cart-item">
+            <img src="${item.img}" onerror="this.src='https://images.unsplash.com/photo-1559416523-140ddc3d238c?w=100'" />
+            <div class="cart-item-details">
+              <h4>${item.name}</h4>
+              <span>${item.price} ر.س</span>
+            </div>
+            <button onclick="deleteFromCart(${idx})" style="background: none; border: none; color: #ef4444; cursor: pointer;">
+              <i class="fa-solid fa-trash"></i>
+            </button>
+          </div>
+        `;
+      });
+
+      totalTxt.innerText = sum + ' ر.س';
+    }
+
+    // فتح وإغلاق السلة
+    function openCart() {
+      document.getElementById('cartDrawer').classList.add('open');
+      document.getElementById('cartOverlay').style.display = 'block';
+    }
+
+    function closeCart() {
+      document.getElementById('cartDrawer').classList.remove('open');
+      document.getElementById('cartOverlay').style.display = 'none';
+    }
+
+    // فتح شاشة الدفع
+    function openCheckout() {
+      if (cart.length === 0) {
+        alert('السلة فارغة حالياً!');
+        return;
+      }
+      closeCart();
+      const sum = cart.reduce((a, b) => a + b.price, 0);
+      document.getElementById('finalTotalDisplay').value = sum + ' ر.س';
+      document.getElementById('checkoutForm').style.display = 'block';
+      document.getElementById('successBox').style.display = 'none';
+      document.getElementById('checkoutModal').style.display = 'flex';
+    }
+
+    function closeCheckout() {
+      document.getElementById('checkoutModal').style.display = 'none';
+    }
+
+    // إتمام الدفع
+    function finishPayment(e) {
+      e.preventDefault();
+      document.getElementById('orderCode').innerText = '#VX-' + Math.floor(1000 + Math.random() * 9000);
+      document.getElementById('checkoutForm').style.display = 'none';
+      document.getElementById('successBox').style.display = 'block';
+      cart = [];
+      renderCart();
+    }
+
+    // فلترة الأقسام (السيارات والأولوية)
+    function filterItems(category, btn) {
+      document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+
+      document.querySelectorAll('.product-card').forEach(card => {
+        if (category === 'all' || card.getAttribute('data-category') === category) {
+          card.style.display = 'flex';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    }
+
+    // البحث
+    function searchItems() {
+      const q = document.getElementById('searchInput').value.toLowerCase();
+      document.querySelectorAll('.product-card').forEach(card => {
+        const name = card.getAttribute('data-name').toLowerCase();
+        card.style.display = name.includes(q) ? 'flex' : 'none';
+      });
+    }
+
+    // فتح نافذة نبذة عنا والشروط
+    function openInfoModal(type) {
+      const title = document.getElementById('infoModalTitle');
+      const content = document.getElementById('infoModalContent');
+
+      if (type === 'about') {
+        title.innerText = 'نبذة عن سيرفر مقاطعة VIREX';
+        content.innerHTML = `
+          <p><strong>سيرفر مقاطعة VIREX (CFW)</strong> هو مجتمع رول بلاي (حياة واقعية) متكامل مبني على منصة FiveM بأعلى معايير الأداء والواقعية.</p>
+          <br>
+          <p>نهدف إلى تقديم بيئة لعب ممتعة وعادلة لجميع اللاعبين، مع توفير أحدث المركبات الحصرية، والرتب، وأنظمة الاقتصاد المتقدمة لضمان أفضل تجربة ممكنة.</p>
+        `;
+      } else if (type === 'terms') {
+        title.innerText = 'الشروط والأحكام وسياسة المتجر';
+        content.innerHTML = `
+          <ul>
+            <li>جميع المشتريات هي منتجات رقمية خاصة بسيرفر VIREX فقط.</li>
+            <li>يمنع منعاً باتاً محاولة بيع أو مقايضة المركبات بأموال حقيقية خارج إطار المتجر.</li>
+            <li>نظراً لطبيعة المنتجات الرقمية الفورية، لا يمكن استرجاع المبالغ بعد استلام المركبة أو الرتبة داخل اللعبة.</li>
+            <li>في حال واجهتك أي مشكلة برمجية بالمركبة يتم تعويضك أو تعديلها فوراً عبر تكت الدعم الفني.</li>
+          </ul>
+        `;
+      } else if (type === 'delivery') {
+        title.innerText = 'طريقة تسليم المركبات والرتب';
+        content.innerHTML = `
+          <p>يتم تسليم طلبك بشكل سريع عبر الخطوات التالية:</p>
+          <br>
+          <ol style="margin-right: 20px;">
+            <li>بعد تأكيد الدفع ستحصل على رقم الطلب الخاص بك.</li>
+            <li>توجّه إلى ديسكورد السيرفر وافتح تذكرة (Ticket) في قسم استلام المتجر.</li>
+            <li>أرسل رقم الطلب مع آيدي الفايف ام الخاص بك وسيتم تنزيل المركبة في كراجك خلال دقائق.</li>
+          </ol>
+        `;
+      }
+
+      document.getElementById('infoModalOverlay').style.display = 'block';
+      document.getElementById('infoModal').style.display = 'block';
+    }
+
+    function closeInfoModal() {
+      document.getElementById('infoModalOverlay').style.display = 'none';
+      document.getElementById('infoModal').style.display = 'none';
+    }
+
+    
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
 </body>
 </html>
